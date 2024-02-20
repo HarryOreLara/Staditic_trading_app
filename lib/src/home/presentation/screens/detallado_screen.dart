@@ -3,14 +3,14 @@ import 'package:go_router/go_router.dart';
 
 import 'package:staditic_trading_app/src/home/presentation/widgets/widgets.dart';
 
-class PruebaScreen extends StatefulWidget {
-  const PruebaScreen({super.key});
+class DetalladoScreen extends StatefulWidget {
+  const DetalladoScreen({super.key});
 
   @override
-  State<PruebaScreen> createState() => _PruebaScreenState();
+  State<DetalladoScreen> createState() => _DetalladoScreenState();
 }
 
-class _PruebaScreenState extends State<PruebaScreen> {
+class _DetalladoScreenState extends State<DetalladoScreen> {
   bool ver = true;
 
   @override

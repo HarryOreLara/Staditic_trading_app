@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staditic_trading_app/src/auth/presentation/presentacion.dart';
 
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -186,7 +185,7 @@ class LoginForm extends ConsumerWidget {
                   onTap: () {
                     loginForm.isPosting
                         ? null
-                        : ref.read(loginFormProvider.notifier).onFormSubmit;
+                        : ref.read(loginFormProvider.notifier).onFormSubmit();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15.0),

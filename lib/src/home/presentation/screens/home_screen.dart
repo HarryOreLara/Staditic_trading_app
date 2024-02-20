@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:staditic_trading_app/src/home/presentation/widgets/bar_chart.dart';
-import 'package:staditic_trading_app/src/home/presentation/widgets/chart_winrate.dart';
 import 'package:staditic_trading_app/src/home/presentation/widgets/widgets.dart';
+import 'package:staditic_trading_app/src/shared/widgets/side_menu.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,25 +9,19 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
+    final scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
+      drawer: SideMenu(scaffoldKey: scaffoldKey),
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              print("opciones");
-            },
-            icon: const Icon(
-              Icons.person,
-              color: Colors.white,
-            )),
+        iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
               onPressed: () {
-                context.push("/prueba");
+                context.push("/settings");
               },
               icon: const Icon(
                 Icons.settings,
-                color: Colors.white,
               )),
         ],
       ),

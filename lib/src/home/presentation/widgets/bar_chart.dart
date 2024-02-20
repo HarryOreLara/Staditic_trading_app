@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:staditic_trading_app/core/utils/app_colors.dart';
-import 'package:staditic_trading_app/core/utils/color_extensions.dart';
+import 'package:staditic_trading_app/core/utils/utils.dart';
+
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 

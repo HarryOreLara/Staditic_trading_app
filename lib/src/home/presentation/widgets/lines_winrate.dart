@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class LineWinrate extends StatelessWidget {
-  const LineWinrate({required this.isShowingMainData});
+  const LineWinrate({super.key, required this.isShowingMainData});
 
   final bool isShowingMainData;
 
