@@ -47,7 +47,7 @@ class _DetalladoScreenState extends State<DetalladoScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Center(
-            child: Container(
+            child: SizedBox(
                 height: 300.0, child: LineWinrate(isShowingMainData: ver))),
       ),
       //body: BarChartSample1(),

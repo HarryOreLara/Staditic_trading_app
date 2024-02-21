@@ -15,8 +15,7 @@ class Monto extends FormzInput<double, MontoError> {
     if (isValid || isPure) return null;
 
     if (displayError == MontoError.empty) return 'El campo es requerido';
-    if (displayError == MontoError.value)
-      return 'Tiene que ser numero cero o mayor';
+    if (displayError == MontoError.value) return 'Tiene que ser numero cero o mayor';
 
     return null;
   }

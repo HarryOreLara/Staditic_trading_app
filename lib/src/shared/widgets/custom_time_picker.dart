@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class CustomTimePicker extends StatefulWidget {
   final Function(String)? onChanged;
@@ -14,6 +12,7 @@ class CustomTimePicker extends StatefulWidget {
 class _CustomTimePickerState extends State<CustomTimePicker> {
   TimeOfDay? selectedHoraInicio;
   bool isHoraInicioSelected = false;
+
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;

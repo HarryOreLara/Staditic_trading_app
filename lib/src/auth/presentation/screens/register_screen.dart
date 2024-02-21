@@ -151,12 +151,7 @@ class RegisterForm extends ConsumerWidget {
                   ],
                 ),
                 GestureDetector(
-                  onTap: () {
-                    // loginForm.isPosting
-                    //     ? null
-                    //     : ref.read(loginProvider.notifier).onFormSubmit;
-                    print("register");
-                  },
+                  onTap: () {},
                   child: Container(
                     padding: const EdgeInsets.all(15.0),
                     decoration: const BoxDecoration(

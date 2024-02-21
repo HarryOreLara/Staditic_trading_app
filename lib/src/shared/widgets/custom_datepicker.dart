@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:staditic_trading_app/config/helpers/human_formats.dart';
 
 class CustomDatePicker extends StatefulWidget {
-  const CustomDatePicker({super.key});
+  final Function(String)? onChanged;
+  final String? errorMessage;
+  const CustomDatePicker({super.key, this.onChanged, this.errorMessage});
 
   @override
   State<CustomDatePicker> createState() => _CustomDatePickerState();
@@ -22,6 +24,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        widget.onChanged!(selectedDate.toString());
       });
     }
   }

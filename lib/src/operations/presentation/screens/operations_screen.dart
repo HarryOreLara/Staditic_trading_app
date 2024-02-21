@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:staditic_trading_app/src/operations/presentation/providers/operation_provider.dart';
+import 'package:staditic_trading_app/src/operations/presentation/widgets/widgets.dart';
 import 'package:staditic_trading_app/src/shared/widgets/widgets_shared.dart';
 
 class OperationsScreen extends StatelessWidget {
@@ -28,6 +29,7 @@ class OperationsScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_ios)),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: _OperationForm(textStyle: textStyle, size: size),
       ),
     );
@@ -59,78 +61,9 @@ class _OperationForm extends ConsumerWidget {
           const SizedBox(
             height: 20.0,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Radio(value: 1, groupValue: 'null', onChanged: (index) {}),
-                    Text(
-                      'Forex',
-                      style: textStyle.labelMedium,
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  children: [
-                    Radio(value: 1, groupValue: 'null', onChanged: (index) {}),
-                    Text(
-                      'Cripto',
-                      style: textStyle.labelMedium,
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  children: [
-                    Radio(value: 1, groupValue: 'null', onChanged: (index) {}),
-                    Text('Acciones', style: textStyle.labelMedium)
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Radio(value: 1, groupValue: 'null', onChanged: (index) {}),
-                    Text(
-                      'Materia \n Prima',
-                      style: textStyle.labelMedium,
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  children: [
-                    Radio(value: 1, groupValue: 'null', onChanged: (index) {}),
-                    Text(
-                      'Indices',
-                      style: textStyle.labelMedium,
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  children: [
-                    Radio(value: 1, groupValue: 'null', onChanged: (index) {}),
-                    Text(
-                      'Futuros',
-                      style: textStyle.labelMedium,
-                    )
-                  ],
-                ),
-              ),
-            ],
+          MercadoRadioPicker(
+            onChanged: (value) =>
+                ref.read(operationProvider.notifier).onMercadoChange(value),
           ),
           const SizedBox(
             height: 22.0,
@@ -140,11 +73,25 @@ class _OperationForm extends ConsumerWidget {
             children: [
               SizedBox(
                 width: size.width * 0.43,
-                child: const CustomTimePicker(),
+                child: CustomTimePicker(
+                  onChanged: (value) => ref
+                      .read(operationProvider.notifier)
+                      .onHoraOperacionChange(value),
+                  errorMessage: !operationForm.isFormPosted
+                      ? operationForm.horaOperacion.errorMessage
+                      : null,
+                ),
               ),
               SizedBox(
                 width: size.width * 0.43,
-                child: const CustomDatePicker(),
+                child: CustomDatePicker(
+                  onChanged: (value) => ref
+                      .read(operationProvider.notifier)
+                      .onFechaOperacionChange(value),
+                  errorMessage: !operationForm.isFormPosted
+                      ? operationForm.fechaOperacion.errorMessage
+                      : null,
+                ),
               )
             ],
           ),
@@ -158,32 +105,15 @@ class _OperationForm extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Radio(
-                          value: 1, groupValue: 'null', onChanged: (index) {}),
-                      Text(
-                        'Ganada',
-                        style: textStyle.labelMedium,
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Radio(
-                          value: 1, groupValue: 'null', onChanged: (index) {}),
-                      Text(
-                        'Perdida',
-                        style: textStyle.labelMedium,
-                      )
-                    ],
-                  ),
-                ],
-              ),
               SizedBox(
-                width: size.width * 0.50,
+                  width: size.width * 0.50,
+                  child: GanadaPerdidaRadioPicker(
+                    onChanged: (value) => ref
+                        .read(operationProvider.notifier)
+                        .onGanadaPerdida(value),
+                  )),
+              SizedBox(
+                width: size.width * 0.40,
                 child: CustomTextFormField(
                   label: "00.00",
                   keyboardType: TextInputType.number,
@@ -226,6 +156,9 @@ class _OperationForm extends ConsumerWidget {
                     ? null
                     : ref.read(operationProvider.notifier).createOperation,
               )),
+          const SizedBox(
+            height: 25.0,
+          )
         ],
       ),
     );
