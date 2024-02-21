@@ -44,7 +44,12 @@ class _DetalladoScreenState extends State<DetalladoScreen> {
         ],
         centerTitle: true,
       ),
-      body: Center(child: LineWinrate(isShowingMainData: ver)),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Center(
+            child: Container(
+                height: 300.0, child: LineWinrate(isShowingMainData: ver))),
+      ),
       //body: BarChartSample1(),
     );
   }
