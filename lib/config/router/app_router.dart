@@ -4,7 +4,7 @@ import 'package:staditic_trading_app/config/router/app_router_notifier.dart';
 import 'package:staditic_trading_app/src/auth/presentation/presentacion.dart';
 import 'package:staditic_trading_app/src/home/home.dart';
 import 'package:staditic_trading_app/src/operations/presentation/screens/operations_screen.dart';
-import 'package:staditic_trading_app/src/settings/presentation/screens/settings_screen.dart';
+import 'package:staditic_trading_app/src/settings/presentation/screens/screens.dart';
 
 final goRouterProvider = Provider((ref) {
   final goRouterNotifier = ref.read(goRouterNotifierProvider);
@@ -40,6 +40,18 @@ final goRouterProvider = Provider((ref) {
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingScreen(),
+      ),
+      GoRoute(
+        path: '/ui-control',
+        builder: (context, state) => const UiControlsScreen(),
+      ),
+      GoRoute(
+        path: '/tutorial',
+        builder: (context, state) => const IntroducctionScreen(),
+      ),
+      GoRoute(
+        path: '/theme-change',
+        builder: (context, state) => const ThemeScreen(),
       ),
     ],
     redirect: (context, state) {

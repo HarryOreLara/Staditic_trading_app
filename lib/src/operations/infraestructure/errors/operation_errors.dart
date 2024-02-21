@@ -1,0 +1,1 @@
+class OperationsNotFound implements Exception{}
