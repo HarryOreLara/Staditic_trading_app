@@ -18,13 +18,13 @@ class RegisterScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Stack(
                   children: [
                     Container(
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/images/dragon.jpg"),
+                          image: AssetImage("assets/images/build.jpg"),
                           alignment: Alignment.bottomCenter,
                           fit: BoxFit.fill,
                         ),
@@ -53,6 +53,13 @@ class RegisterForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final registerForm = ref.watch(registerFormProvier);
+
+    ref.listen(authProvider, (previous, next) {
+      if (next.errorMessage.isEmpty) return;
+      showSnackbar(context, next.errorMessage);
+    });
+
     return Expanded(
       flex: 2,
       child: Padding(
@@ -71,7 +78,10 @@ class RegisterForm extends ConsumerWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    context.pop(context);
+                    if (context.canPop()) {
+                      return context.pop();
+                    }
+                    context.go('/login');
                   },
                   child: Text("Iniciar Sesión",
                       style: GoogleFonts.montserrat(
@@ -82,33 +92,101 @@ class RegisterForm extends ConsumerWidget {
             const SizedBox(
               height: 5.0,
             ),
-            const Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
+                const Padding(
+                  padding: EdgeInsets.only(right: 16.0),
+                  child: Icon(
+                    Icons.person,
+                    color: Color(0xFFF72121),
+                  ),
+                ),
+                Expanded(
+                    child: CustomAuthTextField(
+                  hint: "Fullname",
+                  onChanged: (value) => ref
+                      .read(registerFormProvier.notifier)
+                      .onFullNameChange(value),
+                  errorMessage: !registerForm.isFormPosted
+                      ? registerForm.fullName.errorMessage
+                      : null,
+                ))
+              ],
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
                   padding: EdgeInsets.only(right: 16.0),
                   child: Icon(
                     Icons.alternate_email,
                     color: Color(0xFFF72121),
                   ),
                 ),
-                Expanded(child: CustomAuthTextField())
+                Expanded(
+                    child: CustomAuthTextField(
+                  hint: "Email",
+                  onChanged: (value) => ref
+                      .read(registerFormProvier.notifier)
+                      .onEmailChange(value),
+                  errorMessage: !registerForm.isFormPosted
+                      ? registerForm.email.errorMessage
+                      : null,
+                ))
               ],
             ),
             const SizedBox(
               height: 10.0,
             ),
-            const Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(right: 16.0),
                   child: Icon(
                     Icons.lock,
                     color: Color(0xFFF72121),
                   ),
                 ),
-                Expanded(child: CustomAuthTextField())
+                Expanded(
+                    child: CustomAuthTextField(
+                  hint: "Password",
+                  onChanged: (value) => ref
+                      .read(registerFormProvier.notifier)
+                      .onPasswordChange(value),
+                  errorMessage: !registerForm.isFormPosted
+                      ? registerForm.password.errorMessage
+                      : null,
+                ))
+              ],
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(right: 16.0),
+                  child: Icon(
+                    Icons.lock,
+                    color: Color(0xFFF72121),
+                  ),
+                ),
+                Expanded(
+                    child: CustomAuthTextField(
+                  hint: "Confirm Password",
+                  onChanged: (value) => ref
+                      .read(registerFormProvier.notifier)
+                      .onPasswordTwoChange(value),
+                  errorMessage: !registerForm.isFormPosted
+                      ? registerForm.passwordTwo.errorMessage
+                      : null,
+                ))
               ],
             ),
             const SizedBox(
@@ -151,7 +229,9 @@ class RegisterForm extends ConsumerWidget {
                   ],
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    ref.read(registerFormProvier.notifier).onFormSubmit();
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(15.0),
                     decoration: const BoxDecoration(

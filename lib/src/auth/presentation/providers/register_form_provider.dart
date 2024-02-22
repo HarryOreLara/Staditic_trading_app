@@ -3,8 +3,6 @@ import 'package:formz/formz.dart';
 import 'package:staditic_trading_app/src/auth/presentation/presentacion.dart';
 import 'package:staditic_trading_app/src/shared/infraestructure/inputs/inputs.dart';
 
-
-
 final registerFormProvier =
     StateNotifierProvider.autoDispose<RegisterFormNotifier, RegisterFormState>(
         (ref) {
