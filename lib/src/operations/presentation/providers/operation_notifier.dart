@@ -5,6 +5,7 @@ import 'package:staditic_trading_app/src/operations/presentation/providers/opera
 import 'package:staditic_trading_app/src/shared/infraestructure/inputs/fecha_operacion.dart';
 import 'package:staditic_trading_app/src/shared/infraestructure/inputs/ganada_perdida.dart';
 import 'package:staditic_trading_app/src/shared/infraestructure/inputs/inputs.dart';
+import 'package:staditic_trading_app/src/shared/infraestructure/inputs/monto_invertido.dart';
 
 class OperationNotifier extends StateNotifier<OperationState> {
   final OperationRepositoryDomain operationRepositoryDomain;
@@ -13,17 +14,19 @@ class OperationNotifier extends StateNotifier<OperationState> {
 
   createOperation() async {
     _touchEveryField();
+
+    print(state.montoInvertido);
   }
 
   _touchEveryField() {
     final description = Description.dirty(state.description.value);
-    final monto = Monto.dirty(state.monto.value);
+    final montoDevuelto = MontoDevuelto.dirty(state.montoDevuelto.value);
     final horaOperacion = HoraOperacion.dirty(state.horaOperacion.value);
     final fechaOperacion = FechaOperacion.dirty(state.fechaOperacion.value);
 
     state.copyWith(
         isFormPosted: true,
-        monto: monto,
+        montoDevuelto: montoDevuelto,
         description: description,
         horaOperacion: horaOperacion,
         fechaOperacion: fechaOperacion);
@@ -38,7 +41,7 @@ class OperationNotifier extends StateNotifier<OperationState> {
           state.mercado,
           state.fechaOperacion,
           state.horaOperacion,
-          state.monto,
+          state.montoDevuelto,
           state.description
         ]));
   }
@@ -51,7 +54,7 @@ class OperationNotifier extends StateNotifier<OperationState> {
           newMercado,
           state.fechaOperacion,
           state.horaOperacion,
-          state.monto,
+          state.montoDevuelto,
           state.description
         ]));
   }
@@ -63,7 +66,7 @@ class OperationNotifier extends StateNotifier<OperationState> {
         isValid: Formz.validate([
           newFechaOperacion,
           state.description,
-          state.monto,
+          state.montoDevuelto,
           state.horaOperacion,
         ]));
   }
@@ -75,7 +78,7 @@ class OperationNotifier extends StateNotifier<OperationState> {
         isValid: Formz.validate([
           newHoraOperacion,
           state.description,
-          state.monto,
+          state.montoDevuelto,
           state.fechaOperacion
         ]));
   }
@@ -86,18 +89,30 @@ class OperationNotifier extends StateNotifier<OperationState> {
         description: newDescription,
         isValid: Formz.validate([
           newDescription,
-          state.monto,
+          state.montoDevuelto,
           state.horaOperacion,
           state.fechaOperacion
         ]));
   }
 
-  onMontoChange(double value) {
-    final newMonto = Monto.dirty(value);
+  onMontoDevueltoChange(double value) {
+    final newMontoDevuelto = MontoDevuelto.dirty(value);
     state = state.copyWith(
-        monto: newMonto,
+        montoDevuelto: newMontoDevuelto,
         isValid: Formz.validate([
-          newMonto,
+          newMontoDevuelto,
+          state.description,
+          state.horaOperacion,
+          state.fechaOperacion
+        ]));
+  }
+
+  onMontoInvertidoChange(double value) {
+    final newMontoInvertido = MontoInvertido.dirty(value);
+    state = state.copyWith(
+        montoInvertido: newMontoInvertido,
+        isValid: Formz.validate([
+          newMontoInvertido,
           state.description,
           state.horaOperacion,
           state.fechaOperacion

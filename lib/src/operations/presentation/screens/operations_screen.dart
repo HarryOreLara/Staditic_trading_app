@@ -112,18 +112,38 @@ class _OperationForm extends ConsumerWidget {
                         .read(operationProvider.notifier)
                         .onGanadaPerdida(value),
                   )),
-              SizedBox(
-                width: size.width * 0.40,
-                child: CustomTextFormField(
-                  label: "00.00",
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) => ref
-                      .read(operationProvider.notifier)
-                      .onMontoChange(double.tryParse(value) ?? -1),
-                  errorMessage: !operationForm.isFormPosted
-                      ? operationForm.monto.errorMessage
-                      : null,
-                ),
+              Column(
+                children: [
+                  SizedBox(
+                    width: size.width * 0.40,
+                    child: CustomTextFormField(
+                      label: "Monto Invertido",
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) => ref
+                          .read(operationProvider.notifier)
+                          .onMontoInvertidoChange(double.tryParse(value) ?? -1),
+                      errorMessage: !operationForm.isFormPosted
+                          ? operationForm.montoDevuelto.errorMessage
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  SizedBox(
+                    width: size.width * 0.40,
+                    child: CustomTextFormField(
+                      label: "Monto Devuelto",
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) => ref
+                          .read(operationProvider.notifier)
+                          .onMontoDevueltoChange(double.tryParse(value) ?? -1),
+                      errorMessage: !operationForm.isFormPosted
+                          ? operationForm.montoInvertido.errorMessage
+                          : null,
+                    ),
+                  ),
+                ],
               )
             ],
           ),
