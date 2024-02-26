@@ -15,6 +15,11 @@ class OperationNotifier extends StateNotifier<OperationState> {
   createOperation() async {
     _touchEveryField();
 
+    if (!state.isValid) return;
+
+    state = state.copyWith(isPosting: true);
+
+    
     print(state.montoInvertido);
   }
 
